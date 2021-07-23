@@ -1,0 +1,15 @@
+Log:
+  Level: 5 #debug
+  Path:
+
+FilePath:
+
+HTTP:
+  Port: 4040
+
+DB:
+  Host: "localhost"
+  Port: 3306
+  User:
+  Password:
+  Name:
