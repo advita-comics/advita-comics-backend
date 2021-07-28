@@ -1,0 +1,46 @@
+version: '3.5'
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8
+    restart: always
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    environment:
+      # данные для подключения к базе должны совпадать с данными из  local.yml
+      MYSQL_ROOT_PASSWORD: Ky43IEGSo8rs
+      MYSQL_DATABASE: comics
+      MYSQL_USER: advita
+      MYSQL_PASSWORD: Ky43IEGSo8rs
+    command:
+      - '--secure-file-priv='
+    ports:
+      - "3306:3306"
+
+  migrate:
+    container_name: migrate
+    build:
+      context: .
+      dockerfile: Dockerfile-migrate
+    image: backend:migrate
+    restart: on-failure
+    volumes:
+      - ./local.yml:/root/local.yml
+    depends_on:
+      - mysql
+
+  http:
+    container_name: http
+    build:
+      context: .
+      dockerfile: Dockerfile-http
+    image: backend:http
+    restart: always
+    volumes:
+      - ./local.yml:/root/local.yml
+    ports:
+      - 4040:4040
+    depends_on:
+      - mysql
+      - migrate

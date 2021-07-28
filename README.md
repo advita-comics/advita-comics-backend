@@ -1,6 +1,14 @@
 # advita-comics-backend
 Серверная часть advita-comics
 
+## Запуск
+```
+git clone https://github.com/advita-comics/advita-comics-backend.git
+make config
+docker-compose up
+```
+Приложение будет доступно на порту :4040
+
 ## Доступные ручки:
 ```
 GET /company - возвращает информацию по активной компании.

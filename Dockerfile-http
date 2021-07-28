@@ -1,0 +1,22 @@
+FROM golang:1.16.5 as build_base
+ENV GOOS linux
+ENV GOARCH amd64
+ENV GO111MODULE on
+ENV GIT_SSL_NO_VERIFY 1
+ENV PKG github.com/advita-comics/advita-comics-backend
+RUN mkdir -p /go/src/${PKG}
+WORKDIR /go/src/${PKG}
+COPY go.mod go.sum Makefile ./
+RUN make setup
+
+FROM build_base as builder
+COPY . .
+RUN make setup && make build
+
+FROM alpine:3.13.5 as http
+ENV PKG github.com/advita-comics/advita-comics-backend
+WORKDIR /root/
+RUN apk --no-cache add ca-certificates libc6-compat
+COPY --from=builder /go/src/${PKG}/cmd/http ./
+EXPOSE 4040
+ENTRYPOINT ["./http", "-config=local.yml"]

@@ -1,4 +1,4 @@
-HTTP_NAME 		    := http
+HTTP_NAME 		:= http
 MIGRATE_NAME   		:= migrate
 PKG            		:= github.com/advita-comics/advita-comics-backend
 PKG_LIST       		:= $(shell go list ${PKG}/... | grep -v /vendor/)
@@ -15,8 +15,11 @@ config: ## Creating the local config yml.
 	echo "Creating local config yml ..."
 	cp config.example.yml local.yml
 
+db\:migrate\:build: ## Run migrations.
+	cd cmd/$(MIGRATE_NAME) && go build
+
 db\:migrate: ## Run migrations.
-	cd cmd/$(MIGRATE_NAME) && go build && ./$(MIGRATE_NAME) -config=../../local.yml -migrate-path=../../db/migrations
+	cd cmd/$(MIGRATE_NAME) && ./$(MIGRATE_NAME) -config=../../local.yml -migrate-path=../../db/migrations
 
 build: ## Build the executable file of service.
 	echo "Building..."

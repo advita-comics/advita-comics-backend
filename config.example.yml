@@ -8,8 +8,8 @@ HTTP:
   Port: 4040
 
 DB:
-  Host: "localhost"
+  Host: "mysql"
   Port: 3306
-  User:
-  Password:
-  Name:
+  User: advita
+  Password: Ky43IEGSo8rs
+  Name: comics
