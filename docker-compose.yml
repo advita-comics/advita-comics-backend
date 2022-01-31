@@ -3,7 +3,8 @@ version: '3.5'
 services:
   mysql:
     container_name: mysql
-    image: mysql:8
+    image: mysql:latest
+    network_mode: host
     restart: always
     volumes:
       - ./mysql-data:/var/lib/mysql
@@ -15,15 +16,14 @@ services:
       MYSQL_PASSWORD: Ky43IEGSo8rs
     command:
       - '--secure-file-priv='
-    ports:
-      - "3306:3306"
 
   migrate:
     container_name: migrate
     build:
       context: .
       dockerfile: Dockerfile-migrate
-    image: backend:migrate
+    network_mode: host
+#    image: backend:migrate
     restart: on-failure
     volumes:
       - ./local.yml:/root/local.yml
@@ -35,12 +35,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-http
-    image: backend:http
+    network_mode: host
+#    image: backend:http
     restart: always
     volumes:
       - ./local.yml:/root/local.yml
-    ports:
-      - 4040:4040
     depends_on:
       - mysql
       - migrate

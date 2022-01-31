@@ -19,7 +19,7 @@ require (
 	github.com/labstack/gommon v0.3.0 // indirect
 	github.com/lillilli/vconf v0.0.0-20190403152641-ca1e45112696
 	github.com/mattn/go-sqlite3 v1.14.7 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
+	github.com/pkg/errors v0.9.1
 	github.com/pressly/goose v2.7.0+incompatible
 	github.com/sirupsen/logrus v1.8.1
 	golang.org/x/crypto v0.0.0-20210616213533-5ff15b29337e // indirect
