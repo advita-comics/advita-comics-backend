@@ -76,12 +76,12 @@ create table if not exists donation
     INDEX user_id_idx (user_id),
     FOREIGN KEY (user_id)
         REFERENCES user(id)
-        ON DELETE CASCADE,
-
-    INDEX comics_id_idx (comics_id),
-    FOREIGN KEY (comics_id)
-        REFERENCES comics(id)
         ON DELETE CASCADE
+
+#     INDEX comics_id_idx (comics_id),
+#     FOREIGN KEY (comics_id)
+#         REFERENCES comics(id)
+#         ON DELETE CASCADE
 )CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=INNODB;
 
 create table if not exists transaction

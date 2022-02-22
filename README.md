@@ -24,20 +24,23 @@ GET /company - возвращает информацию по активной �
  POST /donation - создает новое пожертвование
  
  ожидаемый запрос:
- {
-    "areRegularPaymentsEnabled": true,
-    "comicsId": 1,
-    "donationAmount": 332,
-    "isSubscribedToGetReport": true,
-    "isSubscribedToTrackProgress": true,
-    "userEmail": "testov@gmail.com",
-    "userName": "Test",
-    "personalisation": {
-        "previewName": "eeeehow",
-        "costumeColor": "blue",
-        "characterGender": 0,
-        "characterName": "superman"
-    }
+{
+  "character": {
+    "gender": "0", 
+    "name": "myname",
+    "costumeColor": "blue",
+    "hairColor": "red"
+  },
+  "donation": {
+    "amount": 700,
+    "directionId": 3,
+    "userEmail": "bad@gmail.com",
+    "areRegularPaymentsEnabled": true
+  },
+  "subscriptions": {
+    "getReport": true,
+    "trackProgress": true
+  }
 }
 
 пример удачного ответа:

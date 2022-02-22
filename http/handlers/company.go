@@ -44,11 +44,16 @@ func (d companyHandler) CompanyInfo(c echo.Context) error {
 		})
 	}
 
-	sum, err := d.db.Dao().DonationDao().DonationSum(ctx, companies[0].ID)
+	var sum float64
+
+	donations, err := d.db.Dao().DonationDao().Donations(ctx, companies[0].ID)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, ErrorResp{
-			Error: errors.Wrap(err, "d.db.Dao().DonationDao().DonationSum").Error(),
+			Error: errors.Wrap(err, "d.db.Dao().DonationDao().Donations()").Error(),
 		})
+	}
+	for _, donation := range donations {
+		sum += donation.Amount
 	}
 
 	remainDays := math.Round(time.Until(companies[0].ExpirationDate).Hours() / 24)
@@ -57,5 +62,6 @@ func (d companyHandler) CompanyInfo(c echo.Context) error {
 		TerminationAmount: companies[0].TerminationAmount,
 		CollectedAmount:   sum,
 		DayRemains:        remainDays,
+		DonationCount:     len(donations),
 	})
 }

@@ -51,6 +51,7 @@ type donationDao struct {
 // DonationDao - методы для взаимодействия с таблицей пожертвований и их типов
 type DonationDao interface {
 	Create(ctx context.Context, donation *Donation) (*Donation, error)
+	Donations(ctx context.Context, companyID int) ([]Donation, error)
 	DonationSum(ctx context.Context, companyID int) (float64, error)
 	ListDonationTypes(ctx context.Context, filter map[string]interface{}) ([]DonationType, error)
 }
@@ -82,6 +83,21 @@ func (d donationDao) DonationSum(ctx context.Context, companyID int) (float64, e
 	}
 
 	return sum.Sum, nil
+}
+
+func (d donationDao) Donations(ctx context.Context, companyID int) ([]Donation, error) {
+	var err error
+	var donations []Donation
+
+	sql := rel.SQL(`SELECT id, amount, company_id, user_id, comics_id
+								FROM donation
+							WHERE status=? and company_id=?;`, ACTIVE, companyID)
+	err = d.db.FindAll(ctx, &donations, sql)
+	if err != nil {
+		return donations, err
+	}
+
+	return donations, nil
 }
 
 // ListDonationTypes - отдает слайс вариантов пожертвований удовлетворяющих фильтру,

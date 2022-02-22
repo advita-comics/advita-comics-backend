@@ -23,7 +23,6 @@ services:
       context: .
       dockerfile: Dockerfile-migrate
     network_mode: host
-#    image: backend:migrate
     restart: on-failure
     volumes:
       - ./local.yml:/root/local.yml
@@ -36,7 +35,6 @@ services:
       context: .
       dockerfile: Dockerfile-http
     network_mode: host
-#    image: backend:http
     restart: always
     volumes:
       - ./local.yml:/root/local.yml
