@@ -18,7 +18,8 @@ GET /company - возвращает информацию по активной �
  {
     "terminationAmount": 30000,
     "collectedAmount": 4856,
-    "dayRemains": 161
+    "dayRemains": 161,
+    "donationCount": 10
  }
  
  POST /donation - создает новое пожертвование
