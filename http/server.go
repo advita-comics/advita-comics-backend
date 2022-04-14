@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/advita-comics/advita-comics-backend/config"
 	"github.com/advita-comics/advita-comics-backend/db"
 	"github.com/advita-comics/advita-comics-backend/http/handlers"
 
-	"github.com/advita-comics/advita-comics-backend/config"
 	"github.com/facebookgo/grace/gracehttp"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -23,6 +24,11 @@ type Server struct {
 func NewServer(cfg *config.Config, db db.DB) *Server {
 	e := echo.New()
 	e.Server.Addr = fmt.Sprintf(":%d", cfg.HTTP.Port)
+
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+	}))
 
 	return &Server{
 		HTTP:     e,
